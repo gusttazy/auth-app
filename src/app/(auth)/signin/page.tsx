@@ -1,3 +1,14 @@
+/**
+ * Tela de Login
+ * 
+ * Implementa:
+ * - Formulário de autenticação
+ * - Validação de campos
+ * - Integração com Supabase Auth
+ * - Feedback visual de carregamento
+ * - Redirecionamento após login
+ */
+
 import {
   View,
   Text,
@@ -12,12 +23,21 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 
-
 export default function Login() {
+  // Estados para gerenciar os campos do formulário e estado de carregamento
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Função para processar o login
+   * 
+   * Implementa:
+   * - Validação de campos
+   * - Autenticação com Supabase
+   * - Tratamento de erros
+   * - Redirecionamento após sucesso
+   */
   async function handleSignin() {
     setLoading(true);
 
@@ -56,6 +76,8 @@ export default function Login() {
             placeholderTextColor="#494848"
             value={email}
             onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
         </View>
 
@@ -71,7 +93,11 @@ export default function Login() {
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleSignin}>
+        <TouchableOpacity 
+          style={[styles.button, loading && styles.buttonDisabled]} 
+          onPress={handleSignin}
+          disabled={loading}
+        >
           <Text style={styles.buttonText}>
             {loading ? "Carregando..." : "ENTRAR"}
           </Text>
@@ -90,6 +116,7 @@ export default function Login() {
   );
 }
 
+// Estilos da tela de login
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -154,6 +181,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: "center",
     alignSelf: "center",
+  },
+  buttonDisabled: {
+    opacity: 0.7,
   },
   buttonText: {
     color: colors.white,

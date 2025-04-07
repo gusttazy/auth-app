@@ -1,3 +1,13 @@
+/**
+ * Tela de Perfil
+ * 
+ * Implementa:
+ * - Exibição de informações do usuário
+ * - Integração com contexto de autenticação
+ * - Funcionalidade de logout
+ * - Redirecionamento após logout
+ */
+
 import { supabase } from "@/lib/supabase";
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from "react-native";
 import { router } from "expo-router";
@@ -5,8 +15,18 @@ import { useAuth } from "@/contexts/AuthContext";
 import colors from "@/constants/colors";
 
 export default function Profile() {
+  // Acesso ao contexto de autenticação para obter dados do usuário
   const { user, setAuth } = useAuth();
 
+  /**
+   * Função para processar o logout
+   * 
+   * Implementa:
+   * - Logout no Supabase
+   * - Limpeza do estado de autenticação
+   * - Tratamento de erros
+   * - Redirecionamento para login
+   */
   async function handleSignOut() {
     const { error } = await supabase.auth.signOut();
     setAuth(null);
@@ -40,6 +60,7 @@ export default function Profile() {
   );
 }
 
+// Estilos da tela de perfil
 const styles = StyleSheet.create({
   container: {
     flex: 1,

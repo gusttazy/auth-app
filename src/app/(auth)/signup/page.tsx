@@ -1,3 +1,14 @@
+/**
+ * Tela de Cadastro
+ * 
+ * Implementa:
+ * - Formulário de cadastro com validações
+ * - Integração com Supabase Auth
+ * - Feedback visual de carregamento
+ * - Redirecionamento após cadastro
+ * - Tratamento de erros específicos
+ */
+
 import {
   View,
   Text,
@@ -15,11 +26,23 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function Signup() {
+  // Estados para gerenciar os campos do formulário e estado de carregamento
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Função para processar o cadastro
+   * 
+   * Implementa:
+   * - Validações de campos obrigatórios
+   * - Validação de comprimento da senha
+   * - Cadastro no Supabase Auth
+   * - Tratamento de erros específicos
+   * - Feedback visual de sucesso
+   * - Redirecionamento para login
+   */
   async function handleSignup() {
     // Validações básicas
     if (!name.trim()) {
@@ -152,6 +175,7 @@ export default function Signup() {
   );
 }
 
+// Estilos da tela de cadastro
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,

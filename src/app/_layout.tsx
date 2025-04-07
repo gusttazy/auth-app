@@ -1,3 +1,14 @@
+/**
+ * Layout principal da aplicação
+ * 
+ * Este arquivo implementa:
+ * - Configuração do contexto de autenticação
+ * - Gerenciamento de estado global
+ * - Navegação baseada em arquivos (File-based routing)
+ * - Animações de transição personalizadas
+ * - Carregamento de fontes personalizadas
+ */
+
 import { useEffect, useCallback } from "react";
 import { View, Animated } from "react-native";
 import { router, Stack } from "expo-router";
@@ -23,7 +34,10 @@ interface AnimationProps {
   layouts: LayoutsProps;
 }
 
-// Transição horizontal personalizada
+/**
+ * Implementação de animação de transição horizontal
+ * Utiliza o Animated API do React Native para criar transições suaves
+ */
 const horizontalTransition = ({ current, layouts }: AnimationProps) => ({
   cardStyle: {
     transform: [
@@ -37,7 +51,10 @@ const horizontalTransition = ({ current, layouts }: AnimationProps) => ({
   },
 });
 
-// Root do app com contexto de autenticação
+/**
+ * Componente Root da aplicação
+ * Implementa o padrão Provider para disponibilizar o contexto de autenticação
+ */
 export default function RootLayout() {
   return (
     <AuthProvider>
@@ -46,10 +63,21 @@ export default function RootLayout() {
   );
 }
 
-// Navegação principal da aplicação
+/**
+ * Componente de navegação principal
+ * Implementa:
+ * - Gerenciamento de estado de autenticação
+ * - Redirecionamento automático baseado em autenticação
+ * - Carregamento de fontes
+ * - Configuração de navegação
+ */
 function AppStack() {
   const { setAuth } = useAuth();
 
+  /**
+   * Callback para gerenciar mudanças no estado de autenticação
+   * Utiliza o padrão Observer para monitorar mudanças no estado de autenticação
+   */
   const handleAuthChange = useCallback(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
@@ -66,6 +94,7 @@ function AppStack() {
     handleAuthChange();
   }, [handleAuthChange]);
 
+  // Carregamento de fontes personalizadas usando o hook useFonts
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
